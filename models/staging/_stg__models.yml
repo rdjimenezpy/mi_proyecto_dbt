@@ -1,0 +1,83 @@
+version: 2
+
+models:
+  - name: stg_pokemon
+    description: "Datos de Pokemon limpiados desde la API"
+    tests:
+      - dbt_expectations.expect_table_row_count_to_be_between:
+          arguments:
+            min_value: 1
+            max_value: 1
+
+    columns:
+      - name: pokemon_id
+        description: "ID único del Pokemon"
+        tests:
+          - unique
+          - not_null
+          - dbt_expectations.expect_column_values_to_be_in_type_list:
+              arguments:
+                column_type_list: [INTEGER, BIGINT]
+
+      - name: pokemon_name
+        description: "Nombre del Pokemón"
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['charmander']
+          - dbt_expectations.expect_column_proportion_of_unique_values_to_be_between:
+              arguments:
+                min_value: 0.95  # 95% valores únicos
+
+      - name: height
+        description: "Altura del Pokemon (numérico)"
+        tests:
+          - not_null
+          - dbt_expectations.expect_column_values_to_be_between:
+              arguments:
+                min_value: 1
+                max_value: 200
+          - dbt_expectations.expect_column_stdev_to_be_between:
+              arguments:
+                min_value: 1
+                max_value: 50
+
+      - name: base_experience
+        description: "Experiencia base del Pokemon"
+        tests:
+          - dbt_expectations.expect_column_values_to_be_between:
+              arguments:
+                min_value: 0
+                max_value: 1000
+          - dbt_expectations.expect_column_mean_to_be_between:
+              arguments:
+                min_value: 50
+                max_value: 200
+
+      - name: weight
+        description: "Peso del Pokemon (numérico)"
+        tests:
+          - not_null:
+              severity: warn   # Advertencia - no falla el build
+          - dbt_expectations.expect_column_values_to_be_between:
+              arguments:
+                min_value: 1
+                max_value: 9999
+
+  - name: stg_weather
+    description: "Datos del clima para una ciudad"
+    columns:
+      - name: city_id
+        description: "ID único de la Ciudad"
+        tests:
+          - unique
+          - not_null
+      - name: city_name
+        description: "Pilar"
+        tests:
+          - not_null
+      - name: weather_description
+        description: "Ciudad de Pilar, Sur"
+        tests:
+          - not_null

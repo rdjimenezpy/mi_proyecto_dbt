@@ -1,0 +1,11 @@
+version: 2
+
+sources:
+  - name: raw
+    database: airbyte_curso
+    schema: raw
+    tables:
+      - name: pokemon
+        identifier: _airbyte_raw_pokemon
+      - name: weather
+        identifier: _airbyte_raw_weather_pilar

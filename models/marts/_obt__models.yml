@@ -1,0 +1,14 @@
+models:
+  - name: obt_pokemon
+    description: >
+      One Big Table con todos los datos de Pokemon para análisis.
+      Incluye información básica, tipos, habilidades y clasificación de poder.
+    columns:
+      - name: pokemon_id
+        description: "Identificador único del Pokemon en la PokeAPI"
+      - name: power_tier
+        description: >
+          Clasificación de poder basada en base_experience:
+          - Legendary: >= 200
+          - Strong: >= 100
+          - Normal: < 100

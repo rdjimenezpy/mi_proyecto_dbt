@@ -1,0 +1,23 @@
+# Seguridad (MUY IMPORTANTE)
+profiles.yml
+.env
+
+# === dbt ===
+target/
+dbt_packages/
+logs/
+package-lock.yml
+
+# === Entornos Virtuales ===
+dbt-env/
+venv/
+*.pyc
+
+# === IDEs (PyCharm y VS Code) ===
+.idea/
+.vscode/
+.ai/
+
+# === Sistema Operativo ===
+.DS_Store
+Thumbs.db
